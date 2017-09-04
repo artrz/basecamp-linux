@@ -1,0 +1,26 @@
+{
+  "name": "basecamp-linux",
+  "productName": "Basecamp for Linux",
+  "baseName": "basecamp",
+  "description": "Unofficial Basecamp GNU/Linux Desktop Client.",
+  "version": "0.1.0",
+  "author": "Arturo Rodríguez",
+  "license": "MIT",
+  "main": "app.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arturock/basecamp-linux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arturock/basecamp-linux/issues"
+  },
+  "keywords": [
+    "Basecamp",
+    "Linux",
+    "Desktop"
+  ],
+  "dependencies": {
+    "electron-settings": "^3.0.14"
+  }
+}
