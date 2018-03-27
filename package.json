@@ -2,27 +2,31 @@
   "license": "MIT",
   "private": true,
   "config": {
-    "current_version": "0.1.0"
+    "current_version": "0.1.1"
   },
   "devDependencies": {
-    "basecamp-linux": "file:app/",
-    "electron": "^1.7.5",
-    "electron-packager": "^9.0.1",
-    "eslint": "^4.6.1",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0",
-    "lzma-native": "^3.0.1",
+    "basecamp-linux": "file:app",
+    "electron": "^1.8.4",
+    "electron-packager": "^11.2.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "lzma-native": "^3.0.7",
     "minimist": "^1.2.0",
-    "tar": "^4.0.1"
+    "tar": "^4.4.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "electron ./app",
+    "lint": "eslint ./app ./scripts",
     "build:64": "node ./scripts/build.js --arch=x64",
     "build:32": "node ./scripts/build.js --arch=ia32",
     "build": "node ./scripts/build.js",
     "dist:64": "node ./scripts/build.js --arch=x64 --compress",
     "dist:32": "node ./scripts/build.js --arch=ia32 --compress",
     "dist": "node ./scripts/build.js --compress"
+  },
+  "engines": {
+    "yarn": "^1.5.0"
   }
 }
