@@ -1,4 +1,11 @@
-const { app, BrowserWindow, dialog, Menu, shell, Tray } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  dialog,
+  Menu,
+  shell,
+  Tray,
+} = require('electron');
 const path = require('path');
 const settings = require('electron-settings');
 const menus = require('./menus');
@@ -8,7 +15,6 @@ const APP_NAME = app.getName();
 const APP_VERSION = app.getVersion();
 const APP_DESCRIPTION = 'Unofficial Basecamp GNU/Linux Desktop Client.';
 const BASECAMP_URL = 'https://launchpad.37signals.com';
-const USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.98 Safari/537.36';
 const ICONS_PATH = path.join(app.getAppPath(), '..', 'assets', 'icons');
 const DEFAULTS = {
   iconScheme: 'white',
@@ -54,7 +60,7 @@ const basecamp = {
       win.maximize();
     }
 
-    win.loadURL(url, { USER_AGENT });
+    win.loadURL(url);
 
     win
       .on('close', () => {
@@ -108,7 +114,7 @@ const basecamp = {
   addContextMenu() {
     win.webContents.on('context-menu', (event, params) => {
       event.preventDefault();
-      const linkURL = params.linkURL;
+      const { linkURL } = params.linkURL;
 
       if (linkURL) {
         menus.forContext(linkURL).popup(win);
@@ -159,7 +165,7 @@ const basecamp = {
       buttons: ['Ok'],
       defaultId: 0,
       title: 'About',
-      message: `${APP_NAME} ${APP_VERSION}\n\n${APP_DESCRIPTION}\n\nElectron ${ELECTRON_VERSION}`,
+      message: `${APP_NAME} ${APP_VERSION}\n\n${APP_DESCRIPTION}\n\nElectron ${ELECTRON_VERSION}\n\n${win.webContents.getUserAgent()}`,
     });
   },
 
@@ -236,7 +242,7 @@ const basecamp = {
    * Clears all the app data.
    */
   clearData() {
-    const session = win.webContents.session;
+    const { session } = win.webContents;
     session.clearStorageData(() => {
       session.clearCache(() => {
         win.loadURL(BASECAMP_URL);

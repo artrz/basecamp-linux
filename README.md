@@ -51,6 +51,9 @@ Check the [LICENSE](./LICENSE) file.
 
 ## Changelog
 
+- 0.1.1
+  - Update dependencies, use default UA
+
 - 0.1.0
   - First release
 
