@@ -30,7 +30,6 @@ const PACKAGE_CONFIG = {
   buildVersion: APP_VERSION,
   electronVersion: E_VERSION,
   extraResource: [`${ASSETS_PATH}`],
-  packageManager: 'yarn',
   platform: 'linux',
 };
 
