@@ -114,7 +114,7 @@ const basecamp = {
   addContextMenu() {
     win.webContents.on('context-menu', (event, params) => {
       event.preventDefault();
-      const { linkURL } = params.linkURL;
+      const { linkURL } = params;
 
       if (linkURL) {
         menus.forContext(linkURL).popup(win);

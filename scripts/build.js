@@ -46,8 +46,8 @@ const ARGS = minimist(process.argv.slice(2), {
 const builder = {
   build() {
     builder.reinstallModules();
-    builder.cleanBuild();
-    builder.cleanDist();
+    builder.deleteDir(BUILD_PATH);
+    builder.deleteDir(DIST_PATH);
     builder.package();
   },
 
@@ -56,14 +56,9 @@ const builder = {
     cp.execSync('yarn install', { stdio: 'inherit' });
   },
 
-  cleanBuild() {
-    console.log(`\nDeleting ${BUILD_PATH}...`);
-    cp.execSync(`rm -rf ${BUILD_PATH}`, { stdio: 'inherit' });
-  },
-
-  cleanDist() {
-    console.log(`\nDeleting ${DIST_PATH}...`);
-    cp.execSync(`rm -rf ${DIST_PATH}`, { stdio: 'inherit' });
+  deleteDir(pathToDelete) {
+    console.log(`\nDeleting ${pathToDelete}...`);
+    cp.execSync(`rm -rf ${pathToDelete}`, { stdio: 'inherit' });
   },
 
   package() {
@@ -71,23 +66,17 @@ const builder = {
 
     const arch = { arch: ARGS.arch.split(',') };
 
-    packager(Object.assign({}, PACKAGE_CONFIG, arch), (err, buildPath) => {
-      if (err) {
+    packager(Object.assign({}, PACKAGE_CONFIG, arch))
+      .then((appPaths) => {
+        appPaths.forEach((appPath) => {
+          if (ARGS.compress) {
+            builder.compress(appPath);
+          }
+        });
+      }, (err) => {
+        console.log('An error ocurred:');
         return builder.printDone(err);
-      }
-
-      buildPath.forEach((appPath) => {
-        if (ARGS.compress) {
-          builder.compress(appPath);
-        }
       });
-
-      if (ARGS.compress) {
-        builder.cleanBuild();
-      }
-
-      return null;
-    });
   },
 
   compress(appPath) {
@@ -105,6 +94,7 @@ const builder = {
       .pipe(fs.createWriteStream(path.join(DIST_PATH, filename)))
       .on('finish', () => {
         console.log(` ${filename} ready`);
+        builder.deleteDir(appPath);
       });
   },
 
