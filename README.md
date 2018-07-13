@@ -53,8 +53,13 @@ Check the [LICENSE](./LICENSE) file.
 
 ## Changelog
 
+- 0.1.2
+  - Fix context menu
+  - Update some dependencies
+
 - 0.1.1
-  - Update dependencies, use default UA
+  - Update dependencies
+  - Use default UA
 
 - 0.1.0
   - First release
