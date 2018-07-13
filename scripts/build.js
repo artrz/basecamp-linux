@@ -94,6 +94,7 @@ const builder = {
       .pipe(fs.createWriteStream(path.join(DIST_PATH, filename)))
       .on('finish', () => {
         console.log(` ${filename} ready`);
+        builder.deleteDir(appPath);
       });
   },
 
