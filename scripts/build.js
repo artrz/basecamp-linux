@@ -66,7 +66,7 @@ const builder = {
 
     const arch = { arch: ARGS.arch.split(',') };
 
-    packager(Object.assign({}, PACKAGE_CONFIG, arch))
+    packager({ ...PACKAGE_CONFIG, ...arch })
       .then((appPaths) => {
         appPaths.forEach((appPath) => {
           if (ARGS.compress) {
