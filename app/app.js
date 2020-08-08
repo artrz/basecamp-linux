@@ -142,6 +142,24 @@ const basecamp = {
   },
 
   /**
+   * Go to previous page on history.
+   */
+  goBack() {
+    if (win.webContents.canGoBack()) {
+      win.webContents.goBack();
+    }
+  },
+
+  /**
+   * Go to next page on history.
+   */
+  goForward() {
+    if (win.webContents.canGoForward()) {
+      win.webContents.goForward();
+    }
+  },
+
+  /**
    * Generates and displays a clear data dialog.
    */
   showClearDataDialog() {

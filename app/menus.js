@@ -15,6 +15,13 @@ module.exports = {
         ],
       },
       {
+        label: 'Navigation',
+        submenu: [
+          { label: 'Back', accelerator: 'Alt+Left', click() { basecamp.goBack(); } },
+          { label: 'Forward', accelerator: 'Alt+Right', click() { basecamp.goForward(); } },
+        ],
+      },
+      {
         label: 'Edit',
         submenu: [
           { role: 'undo' },
