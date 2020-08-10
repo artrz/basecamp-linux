@@ -1,10 +1,14 @@
 module.exports = {
-    "extends": [
-        "airbnb-base",
+  env: {
+    browser: true,
+    node: true,
+  },
+  extends: [
+    'airbnb-base',
+  ],
+  settings: {
+    'import/core-modules': [
+      'electron',
     ],
-    "settings": {
-        "import/core-modules": [
-            "electron",
-        ],
-    },
-}
+  },
+};

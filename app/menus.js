@@ -1,15 +1,16 @@
 const { clipboard, Menu, shell } = require('electron');
+const settings = require('./settings');
 
 module.exports = {
   /**
    * Generates the app menu template.
    */
-  forApp(basecamp, settings, defaults) {
+  forApp(app) {
     return Menu.buildFromTemplate([
       {
         label: 'File',
         submenu: [
-          { label: 'Clear data', accelerator: 'Ctrl+K', click() { basecamp.showClearDataDialog(); } },
+          { label: 'Clear data', accelerator: 'Ctrl+K', click() { app.showClearDataDialog(); } },
           { type: 'separator' },
           { role: 'quit' },
         ],
@@ -17,8 +18,8 @@ module.exports = {
       {
         label: 'Navigation',
         submenu: [
-          { label: 'Back', accelerator: 'Alt+Left', click() { basecamp.goBack(); } },
-          { label: 'Forward', accelerator: 'Alt+Right', click() { basecamp.goForward(); } },
+          { label: 'Back', accelerator: 'Alt+Left', click() { app.goBack(); } },
+          { label: 'Forward', accelerator: 'Alt+Right', click() { app.goForward(); } },
         ],
       },
       {
@@ -62,18 +63,18 @@ module.exports = {
                 groupId: 1,
                 type: 'radio',
                 label: 'Black icons',
-                checked: settings.get('iconScheme', defaults.iconScheme) === 'black',
+                checked: settings.get('iconScheme') === 'black',
                 click() {
-                  basecamp.configureIconScheme('black');
+                  app.configureIconScheme('black');
                 },
               },
               {
                 groupId: 1,
                 type: 'radio',
                 label: 'White icons',
-                checked: settings.get('iconScheme', defaults.iconScheme) === 'white',
+                checked: settings.get('iconScheme') === 'white',
                 click() {
-                  basecamp.configureIconScheme('white');
+                  app.configureIconScheme('white');
                 },
               },
             ],
@@ -85,29 +86,46 @@ module.exports = {
                 groupId: 2,
                 type: 'radio',
                 label: 'Show',
-                checked: settings.get('showBadge', defaults.showBadge),
+                checked: settings.get('showBadge'),
                 click() {
-                  basecamp.configureShowBadge(true);
+                  app.configureShowBadge(true);
                 },
               },
               {
                 groupId: 2,
                 type: 'radio',
                 label: 'Hide',
-                checked: !settings.get('showBadge', defaults.showBadge),
+                checked: !settings.get('showBadge'),
                 click() {
-                  basecamp.configureShowBadge(false);
+                  app.configureShowBadge(false);
                 },
               },
             ],
+          },
+          {
+            type: 'checkbox',
+            label: 'Check new version at startup',
+            checked: settings.get('checkNewVersion'),
+            click() {
+              settings.set('checkNewVersion', !settings.get('checkNewVersion'));
+            },
+          },
+          {
+            type: 'checkbox',
+            label: 'Autohide menu',
+            checked: settings.get('autoHideMenu'),
+            click() {
+              app.switchAutoHideMenu();
+            },
           },
         ],
       },
       {
         role: 'help',
         submenu: [
-          { label: 'About', click() { basecamp.showAboutDialog(); } },
+          { label: 'About', click() { app.showAboutDialog(); } },
           { label: 'Website', click() { shell.openExternal('https://github.com/arturock/basecamp-linux'); } },
+          { label: 'Check for new version', click() { app.checkNewVersion(true); } },
           { type: 'separator' },
           { role: 'toggledevtools' },
         ],
