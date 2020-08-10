@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2020-08-10
+### Added
+- Version checker.
+- Configure menu visibility.
+
+### Changed
+- Use notifications from main process.
+
+### Updated
+- Update electron and electron packager packages.
+
 ## [0.2.0] - 2020-08-07
 ### Added
 - Add Back / Forward actions.

@@ -2,12 +2,12 @@
   "license": "MIT",
   "private": true,
   "config": {
-    "current_version": "0.2.0"
+    "current_version": "0.3.0"
   },
   "devDependencies": {
     "basecamp-linux": "file:app",
-    "electron": "8.4.1",
-    "electron-packager": "11.2.1",
+    "electron": "8.5.0",
+    "electron-packager": "15.0.0",
     "eslint": "^7.6.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",

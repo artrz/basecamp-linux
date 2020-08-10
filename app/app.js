@@ -6,21 +6,20 @@ const {
   shell,
   Tray,
 } = require('electron');
-const path = require('path');
-const settings = require('electron-settings');
+const appPackage = require('./package.json');
+const icon = require('./icon');
 const menus = require('./menus');
+const notification = require('./notification');
+const settings = require('./settings');
+const versionChecker = require('./versionChecker');
 
 const ELECTRON_VERSION = process.versions.electron;
 const APP_NAME = app.name;
 const APP_VERSION = app.getVersion();
-const APP_DESCRIPTION = 'Unofficial Basecamp GNU/Linux Desktop Client.';
+const APP_DESCRIPTION = appPackage.description;
 const BASECAMP_URL = 'https://launchpad.37signals.com';
-const ICONS_PATH = path.join(app.getAppPath(), '..', 'assets', 'icons');
-const DEFAULTS = {
-  iconScheme: 'white',
-  showBadge: true,
-};
 
+/** @type {BrowserWindow} */
 let win;
 let tray;
 let unreadsNotified = false;
@@ -36,28 +35,30 @@ const basecamp = {
     this.addTrayIcon();
     this.setIcons();
     this.addWindowEvents();
+    this.bootstrap();
   },
 
   /**
    * Creates the app window.
    */
   createWindow(url) {
-    win = new BrowserWindow({
-      y: settings.getSync('posY', 0),
-      x: settings.getSync('posX', 0),
-      width: settings.getSync('width', 770),
-      height: settings.getSync('height', 700),
+    const config = {
+      y: settings.get('posY'),
+      x: settings.get('posX'),
+      width: settings.get('width'),
+      height: settings.get('height'),
       title: APP_NAME,
-      icon: this.getIcon('icon'),
-      autoHideMenuBar: true,
-      backgroundColor: '#f5efe6',
+      icon: icon('icon'),
+      autoHideMenuBar: settings.get('autoHideMenu'),
+      backgroundColor: settings.get('appBackgroundColor'),
       webPreferences: {
         nodeIntegration: false,
-        preload: `${__dirname}/integration.js`,
       },
-    });
+    };
 
-    if (settings.getSync('isMaximized', false)) {
+    win = new BrowserWindow(config);
+
+    if (settings.get('isMaximized')) {
       win.maximize();
     }
 
@@ -68,11 +69,11 @@ const basecamp = {
     win
       .on('close', () => {
         const bounds = win.getBounds();
-        settings.setSync('posX', bounds.x);
-        settings.setSync('posY', bounds.y);
-        settings.setSync('width', bounds.width);
-        settings.setSync('height', bounds.height);
-        settings.setSync('isMaximized', win.isMaximized());
+        settings.set('posX', bounds.x);
+        settings.set('posY', bounds.y);
+        settings.set('width', bounds.width);
+        settings.set('height', bounds.height);
+        settings.set('isMaximized', win.isMaximized());
       })
       .on('closed', () => {
         tray = null;
@@ -104,11 +105,32 @@ const basecamp = {
     return win;
   },
 
+  bootstrap() {
+    if (settings.get('checkNewVersion')) {
+      this.checkNewVersion();
+    }
+  },
+
+  /**
+   * Checks for new versions.
+   */
+  checkNewVersion(notifyLatest) {
+    versionChecker.check().then((check) => {
+      if (check.comparison === 1) {
+        notification(`New version available ${check.repoVersion}`);
+      } else if (notifyLatest === true) {
+        notification(check.comparison === 0
+          ? `${check.appVersion} is the latest version`
+          : `Dev version ${check.appVersion} (latest is ${check.repoVersion})`);
+      }
+    });
+  },
+
   /**
    * Adds the app menu.
    */
   addAppMenu() {
-    Menu.setApplicationMenu(menus.forApp(basecamp, settings, DEFAULTS));
+    Menu.setApplicationMenu(menus.forApp(this));
   },
 
   /**
@@ -129,7 +151,7 @@ const basecamp = {
    * Adds the tray icon.
    */
   addTrayIcon() {
-    tray = new Tray(this.getIcon('tray'));
+    tray = new Tray(icon('tray'));
     tray.setToolTip(APP_NAME);
     tray.setContextMenu(menus.forTray());
     tray.on('click', () => {
@@ -139,6 +161,16 @@ const basecamp = {
         win.show();
       }
     });
+  },
+
+  /**
+   * Enables or disables menu auto hiding
+   */
+  switchAutoHideMenu() {
+    const isAutoHide = !settings.get('autoHideMenu');
+    win.setAutoHideMenuBar(isAutoHide);
+    win.setMenuBarVisibility(!isAutoHide);
+    settings.set('autoHideMenu', isAutoHide);
   },
 
   /**
@@ -182,7 +214,7 @@ const basecamp = {
   showAboutDialog() {
     dialog.showMessageBox(win, {
       type: 'info',
-      icon: this.getIcon('logo'),
+      icon: icon('logo'),
       buttons: ['Ok'],
       defaultId: 0,
       title: 'About',
@@ -208,7 +240,7 @@ const basecamp = {
       }
     }
 
-    win.webContents.executeJavaScript('typeof BC === \'undefined\' ? 0 : BC.unreads.all', false, result => (result)).then((result) => {
+    win.webContents.executeJavaScript('typeof BC === \'undefined\' ? 0 : BC.unreads.all', false, (result) => (result)).then((result) => {
       const unreads = result.length;
 
       win.setTitle(unreads > 0 ? `${fixedTitle} • ${unreads}` : fixedTitle);
@@ -217,18 +249,11 @@ const basecamp = {
 
       if (unreads > 0) {
         if (!unreadsNotified) {
-          const notification = `
-          new Notification(
-            '${APP_NAME}',
-            { body: 'You have ${unreads} unread notifications' }
-          );`;
-
-          win.webContents.executeJavaScript(notification);
-
+          notification(`You have ${unreads} unread notifications`);
           unreadsNotified = true;
         }
 
-        if (settings.getSync('showBadge', DEFAULTS.showBadge)) {
+        if (settings.get('showBadge')) {
           this.setIcons(`-unreads-${(unreads > 10 ? '10p' : unreads)}`);
         } else {
           this.setIcons('-unreads');
@@ -243,20 +268,8 @@ const basecamp = {
    * Sets the app & tray icons.
    */
   setIcons(suffix) {
-    win.setIcon(this.getIcon(`icon${suffix ? '-unreads' : ''}`));
-    tray.setImage(this.getIcon(`tray${suffix || ''}`));
-  },
-
-  /**
-   * Gets the corresponding icon path.
-   *
-   * @param {string} icon
-   *
-   * @return {string}
-   */
-  getIcon(icon) {
-    const iconScheme = settings.getSync('iconScheme') || DEFAULTS.iconScheme;
-    return `${ICONS_PATH}/${iconScheme}/${icon}.png`;
+    win.setIcon(icon(`icon${suffix ? '-unreads' : ''}`));
+    tray.setImage(icon(`tray${suffix || ''}`));
   },
 
   /**
@@ -277,7 +290,7 @@ const basecamp = {
    * @param {string} color
    */
   configureIconScheme(color) {
-    settings.setSync('iconScheme', color);
+    settings.set('iconScheme', color);
     win.reload();
   },
 
@@ -287,7 +300,7 @@ const basecamp = {
    * @param {string} color
    */
   configureShowBadge(config) {
-    settings.setSync('showBadge', config);
+    settings.set('showBadge', config);
     win.reload();
   },
 };
