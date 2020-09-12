@@ -45,7 +45,7 @@ npm run build:64
 # or npm run build:32
 ```
 
-That will create a `dist/basecamp-linux-*` directory with the application.
+That will create a `buld/basecamp-linux-*` directory with the application.
 
 ## License
 
