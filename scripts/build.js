@@ -45,10 +45,15 @@ const ARGS = minimist(process.argv.slice(2), {
 
 const builder = {
   build() {
-    builder.reinstallModules();
-    builder.deleteDir(BUILD_PATH);
-    builder.deleteDir(DIST_PATH);
-    builder.package();
+    this.reinstallModules();
+
+    this.deleteDir(BUILD_PATH);
+
+    if (ARGS.compress) {
+      this.deleteDir(DIST_PATH);
+    }
+
+    this.package();
   },
 
   reinstallModules() {
@@ -70,12 +75,12 @@ const builder = {
       .then((appPaths) => {
         appPaths.forEach((appPath) => {
           if (ARGS.compress) {
-            builder.compress(appPath);
+            this.compress(appPath);
           }
         });
       }, (err) => {
         console.log('An error ocurred:');
-        return builder.printDone(err);
+        return this.printDone(err);
       });
   },
 
@@ -94,7 +99,7 @@ const builder = {
       .pipe(fs.createWriteStream(path.join(DIST_PATH, filename)))
       .on('finish', () => {
         console.log(` ${filename} ready`);
-        builder.deleteDir(appPath);
+        this.deleteDir(appPath);
       });
   },
 
