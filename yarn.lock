@@ -257,7 +257,7 @@ base64-js@^1.2.3:
   integrity sha512-mLQ4i2QO1ytvGWFWmcngKO//JXAQueZvwEKtjgQFM4jIK0kU+ytMfplL8j+n5mspOfjHwoAg+9yhb7BwAHm36g==
 
 "basecamp-linux@file:app":
-  version "0.3.0"
+  version "0.3.1"
   dependencies:
     electron-settings "^4.0.2"
 
