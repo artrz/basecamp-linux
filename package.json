@@ -5,12 +5,12 @@
     "basecamp-linux": "file:app",
     "electron": "9.4.0",
     "electron-packager": "15.1.0",
-    "eslint": "7.12.0",
-    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint": "7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "2.22.1",
-    "lzma-native": "^6.0.1",
+    "lzma-native": "^7.0.1",
     "minimist": "^1.2.5",
-    "tar": "6.0.5"
+    "tar": "6.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
