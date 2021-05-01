@@ -3,7 +3,7 @@
   "private": true,
   "devDependencies": {
     "basecamp-linux": "file:app",
-    "electron": "8.5.2",
+    "electron": "9.4.0",
     "electron-packager": "15.1.0",
     "eslint": "7.12.0",
     "eslint-config-airbnb-base": "^14.2.0",
