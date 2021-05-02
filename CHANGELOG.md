@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Updated
+- Update some dependencies.
+- Slightly better menu structure.
+
+### Fixed
+- Clear data.
+
 ## [0.3.1] - 2020-10-23
 ### Updated
 - Update some dependencies.
