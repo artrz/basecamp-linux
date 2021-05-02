@@ -201,8 +201,8 @@ const basecamp = {
       defaultId: 1,
       title: 'Clear data',
       message: 'This will clear all data.\n\nDo you want to proceed?',
-    }, (response) => {
-      if (response === 0) {
+    }).then((result) => {
+      if (result.response === 0) {
         this.clearData();
       }
     });
@@ -277,8 +277,8 @@ const basecamp = {
    */
   clearData() {
     const { session } = win.webContents;
-    session.clearStorageData(() => {
-      session.clearCache(() => {
+    session.clearStorageData().then(() => {
+      session.clearCache().then(() => {
         win.loadURL(BASECAMP_URL);
       });
     });

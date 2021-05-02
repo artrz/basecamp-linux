@@ -20,6 +20,8 @@ module.exports = {
         submenu: [
           { label: 'Back', accelerator: 'Alt+Left', click() { app.goBack(); } },
           { label: 'Forward', accelerator: 'Alt+Right', click() { app.goForward(); } },
+          { type: 'separator' },
+          { role: 'reload' },
         ],
       },
       {
@@ -36,12 +38,6 @@ module.exports = {
         ],
       },
       {
-        role: 'window',
-        submenu: [
-          { role: 'close' },
-        ],
-      },
-      {
         label: 'View',
         submenu: [
           { role: 'zoomin' },
@@ -49,8 +45,6 @@ module.exports = {
           { role: 'resetzoom' },
           { type: 'separator' },
           { role: 'togglefullscreen' },
-          { type: 'separator' },
-          { role: 'reload' },
         ],
       },
       {
