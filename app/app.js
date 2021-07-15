@@ -117,11 +117,11 @@ const basecamp = {
   checkNewVersion(notifyLatest) {
     versionChecker.check().then((check) => {
       if (check.comparison === 1) {
-        notification(`New version available\n${check.repoVersion}`);
+        notification(`New version ${check.repoVersion} available`);
       } else if (notifyLatest === true) {
         notification(check.comparison === 0
-          ? `You have the latest version\n${check.appVersion}`
-          : `Dev version ${check.appVersion}\nLatest ${check.repoVersion}`);
+          ? 'You have the latest version'
+          : `This is an unreleased version ${check.appVersion}\n\nLatest published is ${check.repoVersion}`);
       }
     });
   },

@@ -98,7 +98,7 @@ module.exports = {
           },
           {
             type: 'checkbox',
-            label: 'Check new version at startup',
+            label: 'Check for updates at startup',
             checked: settings.get('checkNewVersion'),
             click() {
               settings.set('checkNewVersion', !settings.get('checkNewVersion'));
@@ -119,7 +119,7 @@ module.exports = {
         submenu: [
           { label: 'About', click() { app.showAboutDialog(); } },
           { label: 'Website', click() { shell.openExternal('https://github.com/arturock/basecamp-linux'); } },
-          { label: 'Check for new version', click() { app.checkNewVersion(true); } },
+          { label: 'Check for updates...', click() { app.checkNewVersion(true); } },
           { type: 'separator' },
           { role: 'toggledevtools' },
         ],
