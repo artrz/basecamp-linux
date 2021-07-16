@@ -20,19 +20,7 @@ const ASSETS_PATH = path.join(__dirname, '..', 'assets');
 const BUILD_PATH = path.join(__dirname, '..', 'build');
 const DIST_PATH = path.join(__dirname, '..', 'dist');
 const NODE_MODULES_PATH = path.join(__dirname, '..', 'node_modules');
-const E_VERSION = require(path.join(NODE_MODULES_PATH, 'electron', 'package.json')).version;
-
-const PACKAGE_CONFIG = {
-  dir: SOURCE_PATH,
-  out: BUILD_PATH,
-  name: APP_NAME,
-  appVersion: APP_VERSION,
-  buildVersion: APP_VERSION,
-  electronVersion: E_VERSION,
-  extraResource: [`${ASSETS_PATH}`],
-  packageManager: 'yarn',
-  platform: 'linux',
-};
+const ELECTRON_VERSION = require(path.join(NODE_MODULES_PATH, 'electron', 'package.json')).version;
 
 const ARGS = minimist(process.argv.slice(2), {
   boolean: ['compress'],
@@ -43,9 +31,20 @@ const ARGS = minimist(process.argv.slice(2), {
   },
 });
 
+const PACKAGE_CONFIG = {
+  dir: SOURCE_PATH,
+  out: BUILD_PATH,
+  name: APP_NAME,
+  appVersion: APP_VERSION,
+  electronVersion: ELECTRON_VERSION,
+  extraResource: [`${ASSETS_PATH}`],
+  platform: 'linux',
+  arch: ARGS.arch.split(','),
+};
+
 const builder = {
   build() {
-    this.reinstallModules();
+    this.installAppModules();
 
     this.deleteDir(BUILD_PATH);
 
@@ -56,9 +55,10 @@ const builder = {
     this.package();
   },
 
-  reinstallModules() {
-    console.log('\nReinstalling node_modules...');
-    cp.execSync('yarn install', { stdio: 'inherit' });
+  installAppModules() {
+    this.deleteDir(`${SOURCE_PATH}/node_modules`);
+    console.log('\nInstalling app modules...');
+    cp.execSync('yarn install --no-lockfile', { cwd: SOURCE_PATH, stdio: 'inherit' });
   },
 
   deleteDir(pathToDelete) {
@@ -69,9 +69,7 @@ const builder = {
   package() {
     console.log('\nPackaging app...');
 
-    const arch = { arch: ARGS.arch.split(',') };
-
-    packager({ ...PACKAGE_CONFIG, ...arch })
+    packager(PACKAGE_CONFIG)
       .then((appPaths) => {
         appPaths.forEach((appPath) => {
           if (ARGS.compress) {
