@@ -2,7 +2,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "electron": "11.4.4",
+    "electron": "18.3.7",
     "electron-packager": "15.2.0",
     "eslint": "7.30.0",
     "eslint-config-airbnb-base": "^14.2.1",
