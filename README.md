@@ -28,9 +28,9 @@ As any GNU/Linux Electron application `libappindicator1` is required for [tray i
 
 ## Installation
 
-Download the [latest release](https://github.com/arturock/basecamp-linux/releases).
+Download the [latest release](https://github.com/arturock/basecamp-linux/releases) and extract it on your Applications directory. Run the app by executing the `basecamp` file.
 
-Optionally copy the [desktop file](/assets/basecamp.desktop) on your launchers dir (e.g. ~/.local/share/applications). Note you'll need to configure it to point to the correct app location and select the icon color (white / black) depending on your desktop color scheme.
+Optionally copy the desktop file from [basecamp-linux-x]/resources/assets/basecamp.desktop on your launchers dir (e.g. `~/.local/share/applications`). Note you'll need to configure it to point to the correct app location and select the icon color (white / black) depending on your desktop color scheme.
 
 ## Manual build
 
@@ -55,7 +55,7 @@ If the app fails to open, execute it from a terminal to see any possible trace. 
 [...] GPU process isn't usable. Goodbye.
 ```
 
-You may need to add the `--disable-gpu-sandbox` flag when running the app. If you're using the desktop file just append the flag to the Exec command.
+You may need to add the `--disable-gpu-sandbox` flag when running the app. If you're using the .desktop file just append the flag to the Exec command.
 
 ## License
 
