@@ -58,7 +58,7 @@ const builder = {
   installAppModules() {
     this.deleteDir(`${SOURCE_PATH}/node_modules`);
     console.log('\nInstalling app modules...');
-    cp.execSync('yarn install --no-lockfile', { cwd: SOURCE_PATH, stdio: 'inherit' });
+    cp.execSync('yarn install', { cwd: SOURCE_PATH, stdio: 'inherit' });
   },
 
   deleteDir(pathToDelete) {

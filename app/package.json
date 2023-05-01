@@ -23,7 +23,7 @@
   "dependencies": {
     "electron-settings": "^4.0.2"
   },
-    "os": [
-      "linux"
-    ]
+  "os": [
+    "linux"
+  ]
 }
