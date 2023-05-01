@@ -33,9 +33,8 @@ Download the [latest release](https://github.com/arturock/basecamp-linux/release
 ## Manual build
 
 Required tools:
-- Node
-- Npm
-- Yarn ^1.5.0
+- Node ^19.0.0
+- Yarn ^3.0.0
 
 Clone this repo, cd to the local copy and run
 ```sh
