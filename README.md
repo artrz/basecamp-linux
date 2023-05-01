@@ -30,7 +30,7 @@ As any GNU/Linux Electron application `libappindicator1` is required for [tray i
 
 Download the [latest release](https://github.com/arturock/basecamp-linux/releases) and extract it on your Applications directory. Run the app by executing the `basecamp` file.
 
-Optionally copy the desktop file from [basecamp-linux-x]/resources/assets/basecamp.desktop on your launchers dir (e.g. `~/.local/share/applications`). Note you'll need to configure it to point to the correct app location and select the icon color (white / black) depending on your desktop color scheme.
+Optionally copy the desktop file `basecamp-linux-*/resources/assets/basecamp.desktop` to your launchers dir (e.g. `~/.local/share/applications`). Note you'll need to configure it to point to the correct app location and select the icon color (white / black) depending on your desktop color scheme.
 
 ## Manual build
 
