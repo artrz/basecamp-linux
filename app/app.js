@@ -52,7 +52,7 @@ const basecamp = {
       autoHideMenuBar: settings.get('autoHideMenu'),
       backgroundColor: settings.get('appBackgroundColor'),
       webPreferences: {
-        nodeIntegration: false,
+        contextIsolation: true,
       },
     };
 
@@ -83,6 +83,19 @@ const basecamp = {
         event.preventDefault();
         this.setTitles(title);
       });
+
+    // TODO: required change on electron v22, not tested
+    // https://github.com/electron/electron/pull/24517
+    // win.webContents.setWindowOpenHandler(({ url }) => {
+    //   const regex = /accounts.google.com/;
+
+    //   if (!url.match(regex)) {
+    //     shell.openExternal(url);
+    //     return { action: 'deny' };
+    //   }
+
+    //   return { action: 'allow' };
+    // });
 
     win.webContents
       .on('new-window', (event, linkUrl) => {
