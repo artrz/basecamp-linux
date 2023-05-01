@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Basecamp
+Comment=Basecamp Desktop
+Exec=sh -c "/home/username/Applications/basecamp-linux-x64/basecamp"
+Icon=/home/username/Applications/basecamp-linux-x64/resources/assets/icons/white/logo.png
+Terminal=false
+Categories=Office;

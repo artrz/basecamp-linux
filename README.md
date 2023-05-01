@@ -30,6 +30,8 @@ As any GNU/Linux Electron application `libappindicator1` is required for [tray i
 
 Download the [latest release](https://github.com/arturock/basecamp-linux/releases).
 
+Optionally copy the [desktop file](/assets/basecamp.desktop) on your launchers dir (e.g. ~/.local/share/applications). Note you'll need to configure it to point to the correct app location and select the icon color (white / black) depending on your desktop color scheme.
+
 ## Manual build
 
 Required tools:
@@ -45,6 +47,15 @@ npm run build:64
 ```
 
 That will create a `build/basecamp-linux-*` directory with the application.
+
+## Troubleshooting
+
+If the app fails to open, execute it from a terminal to see any possible trace. If you're getting the error
+```
+[...] GPU process isn't usable. Goodbye.
+```
+
+You may need to add the `--disable-gpu-sandbox` flag when running the app. If you're using the desktop file just append the flag to the Exec command.
 
 ## License
 
