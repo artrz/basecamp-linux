@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="https://raw.githubusercontent.com/arturock/basecamp-linux/master/resources/basecamp-full-stacked.png" width="466" height="390">
+<img src="https://raw.githubusercontent.com/artrz/basecamp-linux/master/resources/basecamp-full-stacked.png" width="466" height="390">
 </h1>
 
 # Basecamp Desktop for Linux
@@ -28,7 +28,7 @@ As any GNU/Linux Electron application `libappindicator1` is required for [tray i
 
 ## Installation
 
-Download the [latest release](https://github.com/arturock/basecamp-linux/releases) and extract it on your Applications directory. Run the app by executing the `basecamp` file.
+Download the [latest release](https://github.com/artrz/basecamp-linux/releases) and extract it on your Applications directory. Run the app by executing the `basecamp` file.
 
 Optionally copy the desktop file `basecamp-linux-*/resources/assets/basecamp.desktop` to your launchers dir (e.g. `~/.local/share/applications`). Note you'll need to configure it to point to the correct app location and select the icon color (white / black) depending on your desktop color scheme.
 
@@ -42,8 +42,7 @@ Clone this repo, cd to the local copy and run
 ```sh
 yarn install
 
-npm run build:64
-# or npm run build:32
+npm run build
 ```
 
 That will create a `build/basecamp-linux-*` directory with the application.

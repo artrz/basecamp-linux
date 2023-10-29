@@ -16,15 +16,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "electron ./app",
     "lint": "eslint ./app ./scripts",
-    "build": "node ./scripts/build.js",
-    "build:32": "node ./scripts/build.js --arch=ia32",
-    "build:64": "node ./scripts/build.js --arch=x64",
-    "dist": "node ./scripts/build.js --compress",
-    "dist:32": "node ./scripts/build.js --arch=ia32 --compress",
-    "dist:64": "node ./scripts/build.js --arch=x64 --compress"
+    "build": "node ./scripts/build.js --arch=x64",
+    "dist": "node ./scripts/build.js --arch=x64 --compress"
   },
   "engines": {
     "node": "^19.0.0",
     "yarn": "^3.0.0"
-  }
+  },
+  "packageManager": "yarn@4.0.1"
 }

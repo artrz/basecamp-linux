@@ -118,7 +118,7 @@ module.exports = {
         role: 'help',
         submenu: [
           { label: 'About', click() { app.showAboutDialog(); } },
-          { label: 'Website', click() { shell.openExternal('https://github.com/arturock/basecamp-linux'); } },
+          { label: 'Website', click() { shell.openExternal('https://github.com/artrz/basecamp-linux'); } },
           { label: 'Check for updates...', click() { app.checkNewVersion(true); } },
           { type: 'separator' },
           { role: 'toggledevtools' },

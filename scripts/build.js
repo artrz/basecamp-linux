@@ -93,7 +93,7 @@ const builder = {
 
     tar
       .c({ sync: true, cwd: basePath }, [appDir])
-      .pipe(lzma.createCompressor())
+      .pipe(lzma.createCompressor({ threads: 0 }))
       .pipe(fs.createWriteStream(path.join(DIST_PATH, filename)))
       .on('finish', () => {
         console.log(` ${filename} ready`);

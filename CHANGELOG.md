@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- .desktop file template.
+## [0.5.1] - 2023-10-29
 
 ### Updated
-- Update electron and electron packager packages.
+- Update some dependencies.
+
+### Removed
+- Remove support for x86 builds.
 
 
 ## [0.5.0] - 2021-07-16
