@@ -10,7 +10,7 @@
     "eslint-plugin-import": "2.27.5",
     "lzma-native": "^8.0.6",
     "minimist": "^1.2.8",
-    "tar": "6.1.13"
+    "tar": "6.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
